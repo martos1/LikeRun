@@ -6,10 +6,10 @@
 
 <script type="text/javascript" src="phaser.js"></script>
 <script type="text/javascript">
-var game = new Phaser.Game(1000, 800, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload() {
-	game.load.image('sky', 'street.jpg');
+	game.load.image('sky', 'go.png');
     game.load.crossOrigin = 'anonymous';
 
     game.load.spritesheet('dude', 'spritesheet.png', 50, 150);
@@ -17,10 +17,9 @@ function preload() {
 }
 
 function create() {
-	 player = game.add.sprite(100, 150, 'dude');
 	game.add.sprite(0, 0, 'sky');
 	
-	player.animations.add( [0, 1, 2, 3], 10, true);
+	player.animations.play(10,'dude');
 }
 
 function update() {
