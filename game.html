@@ -5,27 +5,7 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="phaser.js"></script>
-<script type="text/javascript">
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-
-function preload() {
-	game.load.image('sky', 'go.png');
-    game.load.crossOrigin = 'anonymous';
-
-    game.load.spritesheet('dude', 'spritesheet.png', 50, 150);
-   
-}
-
-function create() {
-	game.add.sprite(0, 0, 'sky');
-	
-	player.animations.play(10,'dude');
-}
-
-function update() {
-}
-
-</script>
+<script type="text/javascript" src="like.js"></script>
 </head>
 <body>
 </body>
