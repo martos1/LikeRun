@@ -35,7 +35,7 @@ function create() {
 
     game.physics.arcade.gravity.y = 200;
 
-    map.setTileIndexCallback(5, hitCoin, this);
+    map.setTileIndexCallback(5, hitLike, this);
     
     p.body.linearDamping = 1;
     p.body.collideWorldBounds = true;
@@ -49,7 +49,7 @@ function create() {
 
 }
 
-function hitCoin(sprite, tile) {
+function hitLike(sprite, tile) {
 
     tile.alpha = 0.2;
 
