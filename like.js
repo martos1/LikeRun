@@ -27,7 +27,7 @@ var coinscore = 0;
 var likeText;
 var coinText;
 function create() {
-	game.add.tileSprite(0, 0, 9700, 610, 'sky2');
+	game.add.tileSprite(0, 0, 1450, 610, 'sky2');
 	game.stage.backgroundColor = ' #F0F00F';
 	map = game.add.tilemap('map');
 	map.addTilesetImage('platform', 'dirt');
@@ -65,7 +65,7 @@ function create() {
     
    
     
-    for (var i = 5; i < 100; i++)
+    for (var i = 5; i < 200; i++)
     {
     	if(i % 10 == 0){
     		var coin = coins.create(i * 150, 370, 'coin');
