@@ -1,9 +1,7 @@
+
 /**
  * 
- * 
  */
-
-
 var game = new Phaser.Game(800, 600, Phaser.CANVAS,'canvas', { preload: preload, create: create, update: update, render: render });
 var platforms;
 function preload() {
@@ -11,12 +9,13 @@ function preload() {
     game.load.image('sky2', 'blue-sky.jpg');
     game.load.image('dirt', 'platform.png');
     game.load.image('like', 'like-128.png');
-    game.load.image('rock', 'rocks.png');
     game.load.image('coin', 'coin.png');
     game.load.spritesheet('phaser', 'DawnWalkSide_Dict.png', 130, 128);
 
 }
 
+var heart = false;
+var x2 = false;
 var facing = 'right';
 var map;
 var tileset;
@@ -36,7 +35,8 @@ function create() {
 	layer = map.createLayer('Tile Layer 1');
 	 layer.resizeWorld();
 	
-    map.setCollisionBetween(1, 12);
+    map.setCollisionBetween(0, 3);
+    map.setCollisionBetween(3, 8);
 
     p = game.add.sprite(500, 480, 'phaser');
 
@@ -45,7 +45,7 @@ function create() {
     game.physics.arcade.gravity.y = 200;
     
 
-    map.setTileIndexCallback(5, hitLike, this);
+    map.setTileIndexCallback(4, hitLike, this);
     
     p.body.linearDamping = 1;
     p.body.collideWorldBounds = true;
@@ -59,9 +59,7 @@ function create() {
   
     likes = game.add.group();
     coins = game.add.group();
-    rocks = game.add.group();
-    
-    rocks.enableBody = true;
+   
     likes.enableBody = true;
     coins.enableBody = true;
     
@@ -82,10 +80,7 @@ function create() {
 
         like.body.bounce.y = 0.7 + Math.random() * 0.4;
     	}
-    	if(i % 7 == 0){
-    		var rock = rocks.create(i * 150, 540, 'rock');
-    		
-    	}
+    	
     }
     
     likeText = game.add.text(p.body.right - 500, 200, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -106,16 +101,15 @@ function hitLike(sprite, tile) {
 function update() {
 	
     game.physics.arcade.collide(p, layer);
-    game.physics.arcade.collide( rocks, p);
-    game.physics.arcade.collide(rocks, layer);
     game.physics.arcade.collide(likes, layer);
     game.physics.arcade.collide(coins, layer);
-    game.physics.arcade.overlap(p, rocks, boom, null, this);
     game.physics.arcade.overlap(p, coins, collectCoins, null, this);
     game.physics.arcade.overlap(p, likes, collectLikes, null, this);
     function collectLikes (p, likes) {
-
-        likescore++;
+    	if(x2){
+    		likescore++ ;
+    	}
+        likescore++ ;
         likes.kill();
         likeText.text = 'Likes: ' + likescore;
         
@@ -129,11 +123,6 @@ function update() {
         
 
     }
-    function boom(p, rocks){
-    	game.gamePaused();
-    	$.post( "game/update", { likes: likescore , coins: coinscore } );
-    	
-    }
    
 
     p.body.velocity.x = 0;
@@ -142,13 +131,18 @@ function update() {
     {
         if (p.body.onFloor())
         {
-            p.body.velocity.y = -250;
+            p.body.velocity.y = -200;
             p.animations.play('jump');
         }
     }
     if(p.body.onWall()){
-    	p.animations.play('jump');
-    	
+    	if(!heart){
+    		
+			game.gamePaused();
+			$.post( "game/update", { 'likes': likescore , 'coins': coinscore } );
+			
+			
+    	}
     }
 
    if (true)
@@ -174,6 +168,4 @@ function render() {
 
 
 }
-
-
 
